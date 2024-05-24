@@ -59,7 +59,9 @@ function M.open(name)
 			M.open(input)
 		end)
 	else
-		vim.cmd("e " .. opts.dir .. name)
+		local fn = opts.dir .. name
+		fio.mkdir(vim.fn.fnamemodify(fn, ":h"))
+		vim.cmd("e " .. fn)
 	end
 end
 
