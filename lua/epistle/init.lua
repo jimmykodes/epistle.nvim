@@ -37,7 +37,7 @@ end
 function M.setup(user_opts)
 	opts = vim.tbl_extend("force", default_opts, user_opts)
 
-	opts.dir = vim.fn.expand(opts.dir)
+	opts.dir = vim.fs.normalize(opts.dir)
 	fio.mkdir(opts.dir)
 
 	if opts.ext:sub(1, 1) ~= "." then
@@ -60,7 +60,7 @@ function M.open(name)
 		end)
 	else
 		local fn = opts.dir .. name
-		fio.mkdir(vim.fn.fnamemodify(fn, ":h"))
+		fio.mkdir(vim.fs.dirname(fn))
 		vim.cmd("e " .. fn)
 	end
 end

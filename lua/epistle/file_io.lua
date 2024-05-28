@@ -1,6 +1,7 @@
 local M = {}
 
 function M.read_file(file_path)
+	file_path = vim.fs.normalize(file_path)
 	local uv = vim.loop
 	local fd = uv.fs_open(file_path, "r", 438) -- 438 is the octal for 0666
 	if not fd then
@@ -27,11 +28,13 @@ function M.read_file(file_path)
 end
 
 function M.mkdir(path)
+	path = vim.fs.normalize(path)
 	local uv = vim.loop
 	uv.fs_mkdir(path, 448)
 end
 
 function M.write_file(file_path, content)
+	file_path = vim.fs.normalize(file_path)
 	local uv = vim.loop
 	local fd = uv.fs_open(file_path, "w+", 438) -- 438 is the octal for 0666
 	if not fd then
