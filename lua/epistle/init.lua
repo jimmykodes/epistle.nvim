@@ -48,7 +48,7 @@ end
 function M.today()
 	local file = os.date("%Y-%m-%d") .. opts.ext
 	if opts.daily_note_subdir ~= "" then
-		file = opts.daily_note_subdir .. "/" .. file
+		file = vim.fs.joinpath(opts.daily_note_subdir, file)
 	end
 	M.open(file)
 end
@@ -59,7 +59,7 @@ function M.open(name)
 			M.open(input)
 		end)
 	else
-		local fn = opts.dir .. name
+		local fn = vim.fs.joinpath(opts.dir, name)
 		fio.mkdir(vim.fs.dirname(fn))
 		vim.cmd("e " .. fn)
 	end
